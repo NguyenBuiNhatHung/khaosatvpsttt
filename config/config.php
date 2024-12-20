@@ -4,4 +4,5 @@
     $pass ='';
     $database='khaosatvpsttt';
     $conn=mysqli_connect($hostname,$username,$pass,$database);
+    $line='/khaosatvpsttt';
 ?>
