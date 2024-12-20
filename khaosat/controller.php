@@ -9,7 +9,7 @@
         $purpose = implode(", ", $purposes);
         $concerns = $conn->real_escape_string($_POST['concerns']);
         $feedback = $conn->real_escape_string($_POST['feedback']);
-
+        $conn->set_charset("utf8");
         $sql = "INSERT INTO khaosat (contact, source, used, purpose, concerns, feedback)
             VALUES ('$contact', '$source', '$usage', '$purpose', '$concerns', '$feedback')";
         mysqli_query($conn,$sql);
