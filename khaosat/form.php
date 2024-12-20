@@ -134,6 +134,10 @@
                 <option value="Tìm kiếm Trên Facebook">Tìm kiếm Trên Facebook</option>
                 <option value="Tìm kiếm Trên Google">Tìm kiếm Trên Google</option>
                 <option value="Người quen giới thiệu">Người quen giới thiệu</option>
+                <option value="Các video hướng dẫn trên YouTube">Các video hướng dẫn trên YouTube</option>
+                <option value="Các sự kiện kết nối doanh nghiệp và chuyên gia trong ngành">Các sự kiện kết nối doanh nghiệp và chuyên gia trong ngành</option>
+                <option value="Tham gia các diễn đàn liên quan đến công nghệ">Tham gia các diễn đàn liên quan đến công nghệ</option>
+                <option value="Thông tin qua các chương trình khuyến mãi trên các diễn đàn">Thông tin qua các chương trình khuyến mãi trên các diễn đàn</option>
                 <option value="Khác">Khác</option>
             </select>
 
