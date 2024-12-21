@@ -99,6 +99,7 @@
             margin-top: 10px;
         }
 
+        /* Căn trái cho các trường dữ liệu trong mục 3, 4, 5 */
         .radio-group,
         .checkbox-group {
             text-align: left;
@@ -289,4 +290,32 @@
                 const otherSourceValue = otherSourceInput.value.trim();
                 const usage = document.querySelector('input[name="usage"]:checked');
                 const purposeArray = Array.from(document.querySelectorAll('input[name="purpose[]"]:checked')).map(p => p.value);
-                const concernsArray = Array
+                const concernsArray = Array.from(document.querySelectorAll('input[name="concerns[]"]:checked')).map(c => c.value);
+                const otherPurposeValue = otherPurposeInput.value.trim();
+                const otherConcernsValue = otherConcernsInput.value.trim();
+
+                // Xử lý giá trị nguồn
+                let source = (sourceSelect.value === 'Khác' && otherSourceValue) ? otherSourceValue : sourceSelect.value;
+
+                // Thêm giá trị "Khác" vào mảng mục đích
+                if (otherPurposeValue) {
+                    purposeArray.push(otherPurposeValue); // Thêm giá trị từ ô "Khác"
+                }
+
+                // Thêm giá trị "Khác" vào mảng quan tâm
+                if (otherConcernsValue) {
+                    concernsArray.push(otherConcernsValue); // Thêm giá trị từ ô "Khác"
+                }
+
+                // Gửi dữ liệu hoặc xử lý thêm nếu cần
+                console.log('Source:', source);
+                console.log('Purpose:', purposeArray);
+                console.log('Concerns:', concernsArray);
+            }
+        });
+
+        form.addEventListener('input', validateForm);
+    </script>
+</body>
+
+</html>
