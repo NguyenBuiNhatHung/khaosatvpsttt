@@ -99,7 +99,6 @@
             margin-top: 10px;
         }
 
-        /* Căn trái cho các trường dữ liệu trong mục 3, 4, 5 */
         .radio-group,
         .checkbox-group {
             text-align: left;
@@ -193,8 +192,22 @@
             </div>
             <input type="text" id="otherConcerns" class="other-input" placeholder="Nhập điều bạn quan tâm khác..." />
 
-            <label for="feedback">Mục 6: Ghi ý kiến phản hồi hoặc đóng góp cho công ty:</label>
-            <textarea id="feedback" name="feedback" placeholder="Ví dụ: Công ty nên nâng cấp phần mềm hay tốc độ mạng ..." required></textarea>
+            <label for="satisfaction">Mục 6: Mức độ hài lòng của khách hàng khi được nhân viên VPSTTT hỗ trợ:</label>
+            <div class="radio-group">
+                <div><input type="radio" name="satisfaction" value="1" required> 1 - Cực kỳ không hài lòng</div>
+                <div><input type="radio" name="satisfaction" value="2" required> 2 - Không hài lòng</div>
+                <div><input type="radio" name="satisfaction" value="3" required> 3 - Bình thường</div>
+                <div><input type="radio" name="satisfaction" value="4" required> 4 - Hài lòng</div>
+                <div><input type="radio" name="satisfaction" value="5" required> 5 - Cực kỳ hài lòng</div>
+            </div>
+
+            <label for="goalAchievement">Mục 7: Bạn có đạt được mục đích khi được hỗ trợ tại VPSTTT không?</label>
+            <div class="radio-group">
+                <div><input type="radio" name="goalAchievement" value="1" required> 1 - Không đạt được mục đích</div>
+                <div><input type="radio" name="goalAchievement" value="2" required> 2 - Một phần</div>
+                <div><input type="radio" name="goalAchievement" value="3" required> 3 - Đạt được</div>
+                <div><input type="radio" name="goalAchievement" value="4" required> 4 - Hơn cả mong đợi</div>
+            </div>
 
             <div class="error" id="error-message">Vui lòng điền đầy đủ thông tin.</div>
             <button type="submit" name="submit" id="submitBtn">Gửi khảo sát</button>
@@ -257,8 +270,10 @@
             const purpose = document.querySelectorAll('input[name="purpose[]"]:checked');
             const concerns = document.querySelectorAll('input[name="concerns[]"]:checked');
             const feedback = document.getElementById('feedback').value;
+            const satisfaction = document.querySelector('input[name="satisfaction"]:checked');
+            const goalAchievement = document.querySelector('input[name="goalAchievement"]:checked');
 
-            if (!contact || !source || !usage || purpose.length === 0 || concerns.length === 0 || !feedback) {
+            if (!contact || !source || !usage || purpose.length === 0 || concerns.length === 0 || !feedback || !satisfaction || !goalAchievement) {
                 errorMessage.style.display = 'block';
                 return false;
             } else {
@@ -274,32 +289,4 @@
                 const otherSourceValue = otherSourceInput.value.trim();
                 const usage = document.querySelector('input[name="usage"]:checked');
                 const purposeArray = Array.from(document.querySelectorAll('input[name="purpose[]"]:checked')).map(p => p.value);
-                const concernsArray = Array.from(document.querySelectorAll('input[name="concerns[]"]:checked')).map(c => c.value);
-                const otherPurposeValue = otherPurposeInput.value.trim();
-                const otherConcernsValue = otherConcernsInput.value.trim();
-
-                // Xử lý giá trị nguồn
-                let source = (sourceSelect.value === 'Khác' && otherSourceValue) ? otherSourceValue : sourceSelect.value;
-
-                // Thêm giá trị "Khác" vào mảng mục đích
-                if (otherPurposeValue) {
-                    purposeArray.push(otherPurposeValue); // Thêm giá trị từ ô "Khác"
-                }
-
-                // Thêm giá trị "Khác" vào mảng quan tâm
-                if (otherConcernsValue) {
-                    concernsArray.push(otherConcernsValue); // Thêm giá trị từ ô "Khác"
-                }
-
-                // Gửi dữ liệu hoặc xử lý thêm nếu cần
-                console.log('Source:', source);
-                console.log('Purpose:', purposeArray);
-                console.log('Concerns:', concernsArray);
-            }
-        });
-
-        form.addEventListener('input', validateForm);
-    </script>
-</body>
-
-</html>
+                const concernsArray = Array

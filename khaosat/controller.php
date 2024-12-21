@@ -10,10 +10,11 @@
 
         $concerns = isset($_POST['concerns']) ? $_POST['concerns'] : [];
         $concern = implode(", ", $concerns);
-        $feedback = $conn->real_escape_string($_POST['feedback']);
+        $feedback = $conn->real_escape_string($_POST['satisfaction']);
+        $satis = $conn->real_escape_string($_POST['goalAchievement']);
         $conn->set_charset("utf8");
-        $sql = "INSERT INTO khaosat (contact, source, used, purpose, concerns, feedback)
-            VALUES ('$contact', '$source', '$usage', '$purpose', '$concern', '$feedback')";
+        $sql = "INSERT INTO khaosat (contact, source, used, purpose, concerns, feedback,satisfied)
+            VALUES ('$contact', '$source', '$usage', '$purpose', '$concern', '$feedback','$satis')";
         mysqli_query($conn,$sql);
         session_start();
         $_SESSION['flag']=true;
