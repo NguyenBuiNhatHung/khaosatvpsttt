@@ -92,6 +92,7 @@
             color: red;
             margin: 10px 0;
             display: none;
+            font-size: 12px;
         }
 
         .other-input {
@@ -99,7 +100,6 @@
             margin-top: 10px;
         }
 
-        /* Căn trái cho các trường dữ liệu trong mục 3, 4, 5 */
         .radio-group,
         .checkbox-group {
             text-align: left;
@@ -120,8 +120,9 @@
         </p>
 
         <form id="surveyForm" method="POST" action="controller.php">
-            <label for="contact">Mục 1: Xin email hoặc số điện thoại của khách hàng:</label>
+            <label for="contact">Mục 1: Khách hàng vui lòng nhập email hoặc số điện thoại:</label>
             <input type="text" id="contact" name="contact" placeholder="Ví dụ: 0328812674 hoặc lienhe@vpsttt.com" required>
+            <div class="error" id="contactError">Vui lòng nhập số điện thoại hợp lệ (bắt đầu bằng 0 và 9 chữ số tiếp theo) hoặc địa chỉ email hợp lệ.</div>
 
             <label for="source">Mục 2: Bạn biết VPSTTT qua nguồn nào?</label>
             <select id="source" name="source" required>
@@ -218,6 +219,7 @@
     <script>
         const form = document.getElementById('surveyForm');
         const errorMessage = document.getElementById('error-message');
+        const contactError = document.getElementById('contactError');
         const otherSourceInput = document.getElementById('otherSource');
         const sourceSelect = document.getElementById('source');
         const otherSourceOption = document.getElementById('otherSourceOption');
@@ -226,55 +228,36 @@
         const otherConcernsInput = document.getElementById('otherConcerns');
         const otherConcernsCheckbox = document.getElementById('otherConcernsCheckbox');
 
-        // Hiển thị ô nhập "Nhập nguồn khác" khi chọn "Khác"
-        sourceSelect.addEventListener('change', function () {
-            if (this.value === 'Khác') {
-                otherSourceInput.style.display = 'block'; // Hiện ô nhập
-                otherSourceInput.value = ''; // Đặt lại giá trị nếu đã có
+        function isValidPhoneNumber(phone) {
+            const phoneRegex = /^0\d{9}$/; // Regex for phone: starts with 0 and followed by 9 digits
+            return phoneRegex.test(phone);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email format regex
+            return emailRegex.test(email);
+        }
+
+        function validateContact() {
+            const contact = document.getElementById('contact').value.trim();
+            if (!isValidPhoneNumber(contact) && !isValidEmail(contact)) {
+                contactError.style.display = 'block';
+                return false;
             } else {
-                otherSourceInput.style.display = 'none'; // Ẩn ô nhập
-                otherSourceInput.value = ''; // Đặt lại giá trị nếu không cần
+                contactError.style.display = 'none';
+                return true;
             }
-        });
-
-        // Cập nhật giá trị của tùy chọn "Khác" khi người dùng nhập
-        otherSourceInput.addEventListener('input', function () {
-            otherSourceOption.value = this.value; // Cập nhật giá trị của tùy chọn "Khác"
-        });
-
-        // Hiển thị ô nhập cho "Khác" trong mục 4
-        otherPurposeCheckbox.addEventListener('change', function () {
-            otherPurposeInput.style.display = this.checked ? 'block' : 'none';
-            if (!this.checked) otherPurposeInput.value = ''; // Đặt lại giá trị nếu không chọn
-        });
-
-        // Cập nhật giá trị của tùy chọn "Khác" trong mục 4
-        otherPurposeInput.addEventListener('input', function () {
-            otherPurposeCheckbox.value = this.value; // Cập nhật giá trị của tùy chọn "Khác"
-        });
-
-        // Hiển thị ô nhập cho "Khác" trong mục 5
-        otherConcernsCheckbox.addEventListener('change', function () {
-            otherConcernsInput.style.display = this.checked ? 'block' : 'none';
-            if (!this.checked) otherConcernsInput.value = ''; // Đặt lại giá trị nếu không chọn
-        });
-
-        // Cập nhật giá trị của tùy chọn "Khác" trong mục 5
-        otherConcernsInput.addEventListener('input', function () {
-            otherConcernsCheckbox.value = this.value; // Cập nhật giá trị của tùy chọn "Khác"
-        });
+        }
 
         function validateForm() {
-            const contact = document.getElementById('contact').value;
             const source = document.getElementById('source').value;
             const usage = document.querySelector('input[name="usage"]:checked');
             const purpose = document.querySelectorAll('input[name="purpose[]"]:checked');
             const concerns = document.querySelectorAll('input[name="concerns[]"]:checked');
-            const feedback = document.getElementById('feedback').value;
             const satisfaction = document.querySelector('input[name="satisfaction"]:checked');
             const goalAchievement = document.querySelector('input[name="goalAchievement"]:checked');
 
-            if (!contact || !source || !usage || purpose.length === 0 || concerns.length === 0 || !feedback || !satisfaction || !goalAchievement) {
+            if (!source || !usage || purpose.length === 0 || concerns.length === 0 || !satisfaction || !goalAchievement) {
                 errorMessage.style.display = 'block';
                 return false;
             } else {
@@ -283,38 +266,36 @@
             }
         }
 
+        function validateAll() {
+            const isContactValid = validateContact();
+            const isFormValid = validateForm();
+            return isContactValid && isFormValid;
+        }
+
+        form.addEventListener('input', validateAll);
         form.addEventListener('submit', function (event) {
-            if (!validateForm()) {
+            if (!validateAll()) {
                 event.preventDefault();
-            } else {
-                const otherSourceValue = otherSourceInput.value.trim();
-                const usage = document.querySelector('input[name="usage"]:checked');
-                const purposeArray = Array.from(document.querySelectorAll('input[name="purpose[]"]:checked')).map(p => p.value);
-                const concernsArray = Array.from(document.querySelectorAll('input[name="concerns[]"]:checked')).map(c => c.value);
-                const otherPurposeValue = otherPurposeInput.value.trim();
-                const otherConcernsValue = otherConcernsInput.value.trim();
-
-                // Xử lý giá trị nguồn
-                let source = (sourceSelect.value === 'Khác' && otherSourceValue) ? otherSourceValue : sourceSelect.value;
-
-                // Thêm giá trị "Khác" vào mảng mục đích
-                if (otherPurposeValue) {
-                    purposeArray.push(otherPurposeValue); // Thêm giá trị từ ô "Khác"
-                }
-
-                // Thêm giá trị "Khác" vào mảng quan tâm
-                if (otherConcernsValue) {
-                    concernsArray.push(otherConcernsValue); // Thêm giá trị từ ô "Khác"
-                }
-
-                // Gửi dữ liệu hoặc xử lý thêm nếu cần
-                console.log('Source:', source);
-                console.log('Purpose:', purposeArray);
-                console.log('Concerns:', concernsArray);
             }
         });
 
-        form.addEventListener('input', validateForm);
+        // Hiển thị ô nhập "Nhập nguồn khác" khi chọn "Khác"
+        sourceSelect.addEventListener('change', function () {
+            otherSourceInput.style.display = this.value === 'Khác' ? 'block' : 'none';
+            if (this.value !== 'Khác') otherSourceInput.value = ''; // Đặt lại giá trị nếu không cần
+        });
+
+        // Hiển thị ô nhập cho "Khác" trong mục 4
+        otherPurposeCheckbox.addEventListener('change', function () {
+            otherPurposeInput.style.display = this.checked ? 'block' : 'none';
+            if (!this.checked) otherPurposeInput.value = ''; // Đặt lại giá trị nếu không chọn
+        });
+
+        // Hiển thị ô nhập cho "Khác" trong mục 5
+        otherConcernsCheckbox.addEventListener('change', function () {
+            otherConcernsInput.style.display = this.checked ? 'block' : 'none';
+            if (!this.checked) otherConcernsInput.value = ''; // Đặt lại giá trị nếu không chọn
+        });
     </script>
 </body>
 
