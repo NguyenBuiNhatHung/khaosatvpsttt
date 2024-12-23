@@ -1,5 +1,5 @@
 <?php
-    require "../config/config.php";
+    require "config/config.php";
     if(isset($_POST['submit']))
     {
         $contact = $conn->real_escape_string($_POST['contact']);
@@ -18,6 +18,6 @@
         mysqli_query($conn,$sql);
         session_start();
         $_SESSION['flag']=true;
-        header('Location:'.$line.'/khaosat/khuyenmai.php');
+        header('Location:'.$line.'/khuyenmai.php');
     }
 ?>

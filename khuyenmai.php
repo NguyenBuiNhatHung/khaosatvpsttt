@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo256.png" type="image/png">
     <title>Cảm ơn Khách Hàng</title>
     <style>
         body {
@@ -81,7 +82,7 @@
 
 <body>
     <div class="container">
-        <img src="../images/logo.png" alt="Logo VPSTTT"> <!-- Thay đổi đường dẫn logo -->
+        <img src="images/logo.png" alt="Logo VPSTTT"> <!-- Thay đổi đường dẫn logo -->
         <h2>Cảm ơn Quý khách hàng đã tham gia khảo sát!</h2>
         <p>VPSTTT gửi tặng khách hàng mã giảm giá 20% áp dụng cho tất cả các dịch vụ chỉ có ở <strong>vpsttt.com</strong></p>
         <h2 class="mgg">MÃ GIẢM GIÁ: "VPSTTTNO.1$"</h2>
