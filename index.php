@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,7 +107,13 @@
         }
     </style>
 </head>
-
+<?php 
+    session_start();
+    if (isset($_SESSION['message'])) {
+        echo "<script>alert('" . addslashes($_SESSION['message']) . "');</script>";
+        $_SESSION['message'] = null;
+    }
+?>
 <body>
     <div class="container">
         <img src="images/logo.png" alt="Logo VPSTTT">

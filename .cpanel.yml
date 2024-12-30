@@ -3,6 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/khaosatvpsttt/public_html/
     - /bin/cp -R * $DEPLOYPATH
+    - /bin/cp -R .htaccess $DEPLOYPATH
     # - /bin/cp -R img $DEPLOYPATH
     # - /bin/cp -R css $DEPLOYPATH
     # - /bin/cp -R js $DEPLOYPATH

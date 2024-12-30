@@ -85,7 +85,9 @@
         <img src="images/logo.png" alt="Logo VPSTTT"> <!-- Thay đổi đường dẫn logo -->
         <h2>Cảm ơn Quý khách hàng đã tham gia khảo sát!</h2>
         <p>VPSTTT gửi tặng khách hàng mã giảm giá 20% áp dụng cho tất cả các dịch vụ chỉ có ở <strong>vpsttt.com</strong></p>
-        <h2 class="mgg">MÃ GIẢM GIÁ: "VPSTTTNO.1$"</h2>
+        <h2 class="mgg">MÃ GIẢM GIÁ: " ';
+        echo $_SESSION['code'];
+        echo ' "</h2>
         <p>Chúng tôi cam kết sẽ tiếp tục lắng nghe và cải tiến để mang đến cho bạn trải nghiệm tốt hơn nữa.</p>
         <p>Một lần nữa, xin cảm ơn sự đóng góp của bạn!</p>
         <footer>
