@@ -198,7 +198,7 @@
                 <div><input type="checkbox" name="concerns[]" value="Tính năng thân thiện với người dùng"> Tính năng thân thiện với người dùng</div>
                 <div><input type="checkbox" name="concerns[]" value="Khác" id="otherConcernsCheckbox"> Khác</div>
             </div>
-            <input type="text-area" id="otherConcerns" class="other-input" placeholder="Nhập điều bạn quan tâm khác..." />
+            <input type="text" id="otherConcerns" class="other-input" placeholder="Nhập điều bạn quan tâm khác..." />
 
             <label for="satisfaction">Mục 6: Mức độ hài lòng của khách hàng khi được nhân viên VPSTTT hỗ trợ:</label>
             <div class="radio-group">
